@@ -5,7 +5,7 @@ const initialState = {
 	navColor:'#fff',
   navStyle:{backgroundColor:'#ff585b', color:'#fff', padding:20},
   userDeets: {
-  	email:"s.okoro07@gmail.com",
+  	email:"brishtiteveja@gmail.com",
 
 }
 }
