@@ -41,16 +41,16 @@ export default class Profile extends Component {
       <ScrollView style={styles.container}>
       <Image source ={require('../images/profile.jpg')} resizeMode="stretch" style={{height:350, width:width}} />
        <View style={[styles.row, {marginTop:15}]}>
-       <Text style = {{fontSize:19, fontWeight:'400'}}>Samuel, </Text><Text style={{fontSize:21, fontWeight:'300', marginBottom:-2}}>23</Text>
+       <Text style = {{fontSize:19, fontWeight:'400'}}>Andy, </Text><Text style={{fontSize:21, fontWeight:'300', marginBottom:-2}}>29</Text>
        </View>
        <View style={styles.row}>
-       <Text style={{color:'#444', fontSize:15}}>Unappers Creative</Text>
+       <Text style={{color:'#444', fontSize:15}}>Creative Programmer</Text>
        </View>
        <View style={styles.row}>
-       <Text style={{color:'#777', fontSize:11}}>less than a mile away</Text>
+       <Text style={{color:'#777', fontSize:11}}>Less than a mile away</Text>
        </View>
        <View style={styles.description}>
-       <Text style={{color:'#555'}}>We hook up, you do my laundry, I promise to call you but never really.</Text>
+       <Text style={{color:'#555'}}>Want to be my homework, I'd do you every night. </Text>
        </View>
        <View style ={styles.commons}>
        <Text style = {styles.title}>
