@@ -1,5 +1,6 @@
 # OSX
 #
+.*.swp
 .DS_Store
 
 # Xcode
