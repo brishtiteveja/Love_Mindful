@@ -28,25 +28,25 @@ export default class Index extends Component {
     if (routeId === 'home') {
       return (
         <Home
-        {...this.props} 
-        userData ={route.userData}
-        navigator={navigator} />
+            {...this.props} 
+            userData ={route.userData}
+            navigator={navigator} />
         );
     }
     if (routeId === 'messages') {
       return (
         <Messages
-        {...this.props} 
-        userData ={route.userData}
-        navigator={navigator} />
+            {...this.props} 
+            userData ={route.userData}
+            navigator={navigator} />
         );
     }
     if (routeId === 'profile') {
       return (
         <Profile
-        {...this.props} 
-        userData ={route.userData}
-        navigator={navigator} />
+            {...this.props} 
+            userData ={route.userData}
+            navigator={navigator} />
         );
     }
   }
@@ -57,8 +57,8 @@ export default class Index extends Component {
         <Navigator
             style={{flex: 1}}
             ref={'NAV'}
-     initialRoute={{id: 'home', name: 'home'}}
-     renderScene={this.renderScene.bind(this)}/>
+            initialRoute={{id: 'home', name: 'home'}}
+            renderScene={this.renderScene.bind(this)}/>
         </View>
     )
 }
