@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 
-import Container from './App/container/index';
+import Container from './app/container/index';
 
 export default class dating_ai extends Component {
   render() {

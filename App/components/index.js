@@ -1,12 +1,9 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+ * Start tab components
+**/
 
 import React, { Component } from 'react';
 import {
-
   StyleSheet,
   Image,
   Text,
@@ -19,14 +16,9 @@ import Home from './home';
 import Messages from './messages';
 import Profile from './profile';
 
-
-
-
-
 export default class Index extends Component {
   constructor(props){
     super(props)
- 
   }
  
   renderScene(route, navigator) {
@@ -59,16 +51,15 @@ export default class Index extends Component {
     }
   }
 
-
   render() {
     return (
       <View style={{flex:1}}>
         <Navigator
             style={{flex: 1}}
             ref={'NAV'}
-            initialRoute={{id: 'home', name: 'home'}}
-            renderScene={this.renderScene.bind(this)}/>
-      </View>
+     initialRoute={{id: 'home', name: 'home'}}
+     renderScene={this.renderScene.bind(this)}/>
+        </View>
     )
 }
 }

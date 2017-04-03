@@ -121,14 +121,6 @@ this.refs['swiper']._goToNextCard()  }
     return (
       <View style={styles.container}>
            <Nav chat = {() => this.props.navigator.replace({id: "messages"})} toProfile = {() => this.props.navigator.replace({id:'profile'})} />
-      <SwipeCards
-        ref = {'swiper'}
-        cards={this.state.cards}
-        containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
-        renderCard={(cardData) => this.Card(cardData)}
-        renderNoMoreCards={() => this.noMore()}
-        handleYup={this.handleYup}
-        handleNope={this.handleNope} />
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
         <TouchableOpacity style = {styles.buttons} onPress = {() => this.nope()}>
         <Iconz name='ios-close' size={45} color="#888" style={{}} />
@@ -140,7 +132,7 @@ this.refs['swiper']._goToNextCard()  }
         <Iconz name='ios-heart-outline' size={36} color="#888" style={{marginTop:5}} />
         </TouchableOpacity>
         </View>
-        </View>
+      </View>
     )
 }
 }
@@ -149,8 +141,7 @@ this.refs['swiper']._goToNextCard()  }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#772747'
   },
   buttons:{
     width:80, 
@@ -177,7 +168,7 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:'#e3e3e3',
     width: 350,
-    height: 420,
+    height: 420
   }
  
 });
