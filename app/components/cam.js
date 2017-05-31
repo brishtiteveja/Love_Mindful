@@ -32,9 +32,7 @@ export default class Cam extends Component {
   }
 
   takePicture() {
-      console.log("Taking = " + this.camera);
       if (this.camera) {
-        console.log("Taking picture.");
         this.camera.capture() 
             .then((data) => console.log(data))
             .catch(err => console.error(err));
@@ -186,7 +184,7 @@ export default class Cam extends Component {
                     &&
                     <TouchableOpacity
                         style={styles.captureButton}
-                        onPress={this.startRecording}
+                        onPress={this.startRecording.bind(this)}
                     >
                         <Image
                             source={require('../assets/ic_videocam_36pt.png')}
@@ -195,7 +193,7 @@ export default class Cam extends Component {
                     ||
                     <TouchableOpacity
                         style={styles.captureButton}
-                        onPress={this.stopRecording}
+                        onPress={this.stopRecording.bind(this)}
                     >
                         <Image
                             source={require('../assets/ic_stop_36pt.png')}
@@ -225,7 +223,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topOverlay: {
-    top: 0,
+    top: 70,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
