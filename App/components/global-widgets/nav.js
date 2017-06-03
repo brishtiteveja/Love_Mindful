@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ScanIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Iconz from 'react-native-vector-icons/Ionicons';
 
 export default class Nav extends Component {
@@ -24,7 +25,11 @@ export default class Nav extends Component {
         </TouchableOpacity>
         <Image source ={require('../../images/logo.png')} resizeMode = "contain" style={{width:100, height:30}} />
         <TouchableOpacity onPress ={this.props.cam}>
-            <Iconz name="ios-camera" color ="#555" size={25} style={{margin:5}} />
+            <Iconz name="ios-camera" color ="#555" size={20} style={{margin:5}} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress ={this.props.scanner}>
+            <ScanIcon name="barcode-scan" color ="#555" size={20} style={{margin:5}} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress ={this.props.chat}>
@@ -56,7 +61,19 @@ export default class Nav extends Component {
     );
   }
 
-    message(){
+  scanner(){
+    return (
+      <View  style={styles.container}>
+        <View style = {{width:25, height:25, margin:10}}/>
+        <Image source ={require('../../images/logo.png')} resizeMode = "contain" style={{width:100, height:30}} />
+        <TouchableOpacity onPress ={this.props.onPress}>
+            <Image source = {require('../../images/tinder.png')} style = {{width:25, height:25, margin:10}}/>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  message(){
     return (
       <View  style={styles.container}>
       <TouchableOpacity onPress ={this.props.onPress}>
@@ -68,10 +85,11 @@ export default class Nav extends Component {
     );
   }
   render() {
-    if(this.props.type == "message"){
-        return (
-          <View>{this.message()}</View>
-        );}
+        if(this.props.type == "message"){
+          return (
+            <View>{this.message()}</View>
+        );
+        }
         else if (this.props.type == "profile"){
           return (
           <View>{this.profile()}</View>
@@ -80,6 +98,11 @@ export default class Nav extends Component {
         else if (this.props.type == "cam"){
           return (
           <View>{this.cam()}</View>
+        );
+        }
+        else if (this.props.type == "scanner"){
+          return (
+          <View>{this.scanner()}</View>
         );
         }
         else{

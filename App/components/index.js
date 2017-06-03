@@ -16,6 +16,7 @@ import Home from './home';
 import Messages from './messages';
 import Profile from './profile';
 import Cam from './cam';
+import Scanner from './scanner';
 
 export default class Index extends Component {
   constructor(props){
@@ -53,6 +54,14 @@ export default class Index extends Component {
     if (routeId === 'cam') {
       return (
         <Cam
+            {...this.props} 
+            userData ={route.userData}
+            navigator={navigator} />
+        );
+    }
+    if (routeId === 'scanner') {
+      return (
+        <Scanner
             {...this.props} 
             userData ={route.userData}
             navigator={navigator} />
