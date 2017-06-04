@@ -95,7 +95,7 @@ export default class Scanner extends Component {
       console.log(data_dict);
         
       if(data_cnt > 0) {
-          this.props.navigator.replace({id:'profile', barcode_data: data_dict});
+          this.props.navigator.replace({id:'profile', userData: data_dict});
       }
 
       //console.log("Type: " + type + "\nData: " + data);

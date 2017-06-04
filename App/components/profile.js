@@ -28,11 +28,22 @@ export default class Profile extends Component {
     this.state = {
       friends: 1098
     }
-    
   }
 
+  showBarCodeData() {
+      data_in_barcode = ['family_name', 'first_name', 'issue_date', 'expiration_date', 
+                         'date_of_birth', 'sex', 'address_street', 'address_city', 
+                         'address_postal_code', 'country', 'eye_color', 'document_discriminator'
+                        ];
 
+      codes_for_data = ['DCS', 'DAC', 'DBD', 'DBA',
+                        'DBB', 'DBC', 'DAG', 'DAI',
+                        'DAK', 'DCG', 'DAY', 'DCF'
+                        ];
 
+      console.log("In Profile page.");
+      console.log(this.props.userData);
+  }
 
   render() {
     return (
@@ -44,13 +55,37 @@ export default class Profile extends Component {
        <Text style = {{fontSize:19, fontWeight:'400'}}>Andy, </Text><Text style={{fontSize:21, fontWeight:'300', marginBottom:-2}}>29</Text>
        </View>
        <View style={styles.row}>
-       <Text style={{color:'#444', fontSize:15}}>Creative Programmer</Text>
+            <Text style={{color:'#444', fontSize:15}}>
+            
+                {
+                    String(
+                        "\n" + 
+                            this.props.userData['first_name'] +
+                        "\n" + 
+                            this.props.userData['family_name'] +
+                        "\n" + 
+                            this.props.userData['date_of_birth'] +
+                        "\n" + 
+                            this.props.userData['issue_date'] +
+                        "\n" + 
+                            this.props.userData['address_street'] +
+                        "\n" + 
+                            this.props.userData['address_city'] +
+                        "\n" + 
+                            this.props.userData['country'] +
+                        "\n"
+                          
+                    )
+                
+                }
+            </Text>
+            {this.showBarCodeData} 
        </View>
        <View style={styles.row}>
        <Text style={{color:'#777', fontSize:11}}>Less than a mile away</Text>
        </View>
        <View style={styles.description}>
-       <Text style={{color:'#555'}}>Want to be my homework, I'd do you every night. </Text>
+       <Text style={{color:'#555'}}>Cool. </Text>
        </View>
        <View style ={styles.commons}>
        <Text style = {styles.title}>
