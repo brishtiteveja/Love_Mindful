@@ -60,7 +60,45 @@ export default class Scanner extends Component {
 
   readBarCode = (e) => {
       console.log("BarCode Found! ");
-      console.log("Type: " + e.type + "\nData: " + e.data);
+      type = e.type;
+      data = e.data;
+
+      data_in_barcode = ['family_name', 'first_name', 'issue_date', 'expiration_date', 
+                         'date_of_birth', 'sex', 'address_street', 'address_city', 
+                         'address_postal_code', 'country', 'eye_color', 'document_discriminator'
+                        ];
+
+      codes_for_data = ['DCS', 'DAC', 'DBD', 'DBA',
+                        'DBB', 'DBC', 'DAG', 'DAI',
+                        'DAK', 'DCG', 'DAY', 'DCF'
+                        ];
+
+      data = data.split(/\r?\n/); 
+      data = String(data);
+      data_dict = {};
+
+      data_cnt = 0;
+      for (i=0; i<data_in_barcode.length; i++) {
+          c = codes_for_data[i];
+          d = data.search(c); 
+          s = data.substring(d, data.length); 
+          se = s.search(',');
+          dd = data.substr(d + 3, se).split(',')[0];
+
+          data_dict[String(data_in_barcode[i])] = String(dd);
+
+          if (dd !== '') {
+            data_cnt++;
+          }
+      }
+
+      console.log(data_dict);
+        
+      if(data_cnt > 0) {
+          this.props.navigator.replace({id:'profile', barcode_data: data_dict});
+      }
+
+      //console.log("Type: " + type + "\nData: " + data);
   }
 
   get typeIcon() {
@@ -228,7 +266,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 300,
     borderWidth: 2,
-    borderColor: '#00FF00',
+    borderColor: '#FF0000',
     backgroundColor: 'transparent',
   },
 });
