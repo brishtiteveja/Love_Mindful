@@ -24,7 +24,7 @@ export default class Scanner extends Component {
             aspect: Camera.constants.Aspect.fill,
             captureTarget: Camera.constants.CaptureTarget.cameraRoll,
             type: Camera.constants.Type.back,
-            orientation: Camera.constants.Orientation.auto,
+            orientation: Camera.constants.Orientation.portrait,
             flashMode: Camera.constants.FlashMode.auto,
             torchMode: Camera.constants.TorchMode.off,
         }, 
@@ -56,6 +56,11 @@ export default class Scanner extends Component {
         type: newType,
       },
     });
+  }
+
+  readBarCode = (e) => {
+      console.log("BarCode Found! ");
+      console.log("Type: " + e.type + "\nData: " + e.data);
   }
 
   get typeIcon() {
@@ -114,13 +119,19 @@ export default class Scanner extends Component {
                 aspect={this.state.camera.aspect}
                 captureTarget={this.state.camera.captureTarget}
                 type={this.state.camera.type}
+                orientation={this.state.camera.orientation}
                 flashMode={this.state.camera.flashMode}
                 torchMode={this.state.camera.torchMode}
                 onFocusChanged={() => {}}
                 onZoomChanged={() => {}}
+                onBarCodeRead={this.readBarCode}
                 defaultTouchToFocus
                 mirrorImage={false}
-            />
+            >
+                    <View style={styles.rectangleContainer}>
+                       <View style={styles.rectangle}/>
+                    </View>
+            </Camera>
 
             <View style={[styles.overlay, styles.topOverlay]}>
                 <TouchableOpacity
@@ -206,5 +217,18 @@ const styles = StyleSheet.create({
   },
   buttonsSpace: {
     width: 10,
+  },
+  rectangleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  rectangle: {
+    height: 100,
+    width: 300,
+    borderWidth: 2,
+    borderColor: '#00FF00',
+    backgroundColor: 'transparent',
   },
 });
