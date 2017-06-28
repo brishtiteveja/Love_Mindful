@@ -58,7 +58,10 @@ export default class Profile extends Component {
             <Text style={{color:'#444', fontSize:15}}>
             
                 {
-                    String(
+                      String(
+                          (this.props.userData == null)? 
+                                "" 
+                                : 
                         "\n" + 
                             this.props.userData['first_name'] +
                         "\n" + 
@@ -75,7 +78,7 @@ export default class Profile extends Component {
                             this.props.userData['country'] +
                         "\n"
                           
-                    )
+                      )
                 
                 }
             </Text>
