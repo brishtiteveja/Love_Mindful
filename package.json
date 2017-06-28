@@ -7,6 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "buffer": "^5.0.6",
+    "fetchival": "^0.3.2",
+    "native-base": "2.1.0",
+    "qs": "^6.5.0",
     "react": "15.4.2",
     "react-native": "0.42.3",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
@@ -15,7 +19,10 @@
     "react-native-vector-icons": "^4.0.0",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-persist-transform-filter": "0.0.13",
+    "redux-thunk": "^2.2.0",
+    "remote-redux-devtools": "^0.5.12",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
