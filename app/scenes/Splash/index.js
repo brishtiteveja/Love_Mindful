@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
 const Splash = () => (
 	<Container>
-		<View style={styles.container}>
+		<View style={{flex:1}}>
 			<Spinner size="small" color="#000000" />
 		</View>
 	</Container>

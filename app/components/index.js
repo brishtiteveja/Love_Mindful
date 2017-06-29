@@ -22,7 +22,7 @@ import Scanner from './scanner';
 
 import * as session from '../services/session';
 import * as routeHistoryActions from '../services/routeHistory/actions';
-//import Splash from '../scenes/Splash';
+import Splash from '../scenes/Splash';
 import Main from '../scenes/Main';
 //import Login from '../scenes/Main/scenes/Login';
 //import Register from '../scenes/Main/scenes/Register';
@@ -40,7 +40,7 @@ export default class Index extends Component {
     super(props)
 
     this.state = {
-        initialRoute: null,
+        initialRoute: routeStack[0],
     };
   }
 
@@ -110,12 +110,10 @@ export default class Index extends Component {
   }
 
   renderContent() {
-/*
     if (!this.state.initialRoute) {
         return <Splash />; 
     }   
-*/
-
+/*
     return (
         <Navigator
             style={{flex: 1}}
@@ -123,7 +121,7 @@ export default class Index extends Component {
             initialRoute={{id: 'home', name: 'home'}}
             renderScene={this.renderScene.bind(this)}/>
     );
-/*
+*/
     return (
         <Navigator
             initialRoute={this.state.initialRoute}
@@ -135,7 +133,6 @@ export default class Index extends Component {
             }   
         />  
     );  
-*/
   } 
 
   render() {

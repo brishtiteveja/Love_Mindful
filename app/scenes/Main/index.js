@@ -1,14 +1,10 @@
 import React, { PropTypes } from 'react';
 import {
 	StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from 'react-native';
-import {
-	Container,
-	Header,
-	Title,
-	Button,
-	View,
-} from 'native-base';
 
 const styles = StyleSheet.create({
 	container: {
@@ -24,29 +20,24 @@ const styles = StyleSheet.create({
 const Main = (props) => {
 	const routeStack = props.navigator.getCurrentRoutes();
 	return (
-		<Container>
-			<View style={styles.container}>
-				<Header>
-					<Title>Welcome</Title>
-				</Header>
-				<View>
-					<Button
-						style={styles.button}
-						onPress={() => props.navigator.jumpTo(routeStack[1])
+		<View style={styles.container}>
+			<View>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() => props.navigator.jumpTo(routeStack[1])
 					}
-					>
-						Login
-					</Button>
-					<Button
-						style={styles.button}
-						onPress={() => props.navigator.jumpTo(routeStack[2])
+				>
+                    <Text> Login </Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() => props.navigator.jumpTo(routeStack[2])
 					}
-					>
-						Register
-					</Button>
-				</View>
+				>
+                    <Text> Register </Text>
+				</TouchableOpacity>
 			</View>
-		</Container>
+		</View>
 	);
 };
 
