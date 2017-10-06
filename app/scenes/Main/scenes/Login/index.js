@@ -1,182 +1,160 @@
-import React, { Component, PropTypes } from 'react';
-import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
+import React, { Component } from 'react';
 import {
-	TouchableWithoutFeedback,
-	StyleSheet,
+  Image,
+  Linking,
+  StyleSheet,
+  Platform,
+  Text,
+  View
 } from 'react-native';
-import {
-	Container,
-	Header,
-	Title,
-	InputGroup,
-	Input,
-	Button,
-	Icon,
-	Text,
-	View,
-	Spinner,
-} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SafariView from 'react-native-safari-view';
 
-import FormMessage from '../../../../components/FormMessage';
-import * as session from '../../../../services/session';
-import * as api from '../../../../services/api';
+export default class App extends Component {
 
-const styles = StyleSheet.create({
-	container: {
-		position: 'absolute',
-		top: 0,
-		bottom: 0,
-		left: 0,
-		right: 0,
-	},
-	content: {
-		padding: 30,
-		flex: 1,
-	},
-	shadow: {
-		flex: 1,
-		width: null,
-		height: null,
-	},
-	inputIcon: {
-		width: 30,
-	},
-	input: {
-		marginBottom: 20,
-	},
-	button: {
-		marginTop: 20,
-		alignSelf: 'center',
-		width: 150,
-	},
-	error: {
-		color: 'red',
-		marginBottom: 20,
-	},
-});
+  state = {
+    user: undefined, // user has not logged in yet
+  };
 
-class Login extends Component {
-	static propTypes = {
-		navigator: PropTypes.shape({
-			getCurrentRoutes: PropTypes.func,
-			jumpTo: PropTypes.func,
-		}),
-	}
+  // Set up Linking
+  componentDidMount() {
+    // Add event listener to handle OAuthLogin:// URLs
+    Linking.addEventListener('url', this.handleOpenURL);
+    // Launched from an external URL
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        this.handleOpenURL({ url });
+      }
+    });
+  };
 
-	constructor(props) {
-		super(props);
+  componentWillUnmount() {
+    // Remove event listener
+    Linking.removeEventListener('url', this.handleOpenURL);
+  };
 
-		this.initialState = {
-			isLoading: false,
-			error: null,
-			email: 'user1@facebook.com',
-			password: '12345678',
-		};
-		this.state = this.initialState;
-	}
+  handleOpenURL = ({ url }) => {
+    // Extract stringified user string out of the URL
+    const [, user_string] = url.match(/user=([^#]+)/);
+    this.setState({
+      // Decode the user string and parse it into JSON
+      user: JSON.parse(decodeURI(user_string))
+    });
+    if (Platform.OS === 'ios') {
+      SafariView.dismiss();
+    }
+  };
 
-	onPressLogin() {
-		this.setState({
-			isLoading: true,
-			error: '',
-		});
-		dismissKeyboard();
+  // Handle Login with Facebook button tap
+  loginWithFacebook = () => this.openURL('http://localhost:3000/auth/facebook');
 
-		session.authenticate(this.state.email, this.state.password)
-		.then(() => {
-			this.setState(this.initialState);
-			const routeStack = this.props.navigator.getCurrentRoutes();
-			this.props.navigator.jumpTo(routeStack[3]);
-		})
-		.catch((exception) => {
-			// Displays only the first error message
-			const error = api.exceptionExtractError(exception);
-			this.setState({
-				isLoading: false,
-				...(error ? { error } : {}),
-			});
+  // Handle Login with Google button tap
+  loginWithGoogle = () => this.openURL('http://localhost:3000/auth/google');
 
-			if (!error) {
-				throw exception;
-			}
-		});
-	}
+  // Open URL in a browser
+  openURL = (url) => {
+    // Use SafariView on iOS
+    if (Platform.OS === 'ios') {
+      SafariView.show({
+        url: url,
+        fromBottom: true,
+      });
+    }
+    // Or Linking.openURL on Android
+    else {
+      Linking.openURL(url);
+    }
+  };
 
-	onPressBack() {
-		const routeStack = this.props.navigator.getCurrentRoutes();
-		this.props.navigator.jumpTo(routeStack[0]);
-	}
-
-	renderError() {
-		if (this.state.error) {
-			return (
-				<Text
-					style={styles.error}
-				>
-					{this.state.error}
-				</Text>
-			);
-		}
-	}
-
-	render() {
-		return (
-			<Container>
-				<View style={styles.container}>
-					<Header>
-						<Button
-							onPress={() => this.onPressBack()}
-							transparent
-						>
-							<Icon name="ios-arrow-back" />
-						</Button>
-						<Title>Login</Title>
-					</Header>
-					<TouchableWithoutFeedback
-						onPress={dismissKeyboard}
-					>
-						<View
-							style={styles.content}
-						>
-							{this.state.error ? (
-								<FormMessage message={this.state.error} />
-							) : null}
-							<InputGroup style={styles.input}>
-								<Icon style={styles.inputIcon} name="ios-person" />
-								<Input
-									placeholder="Email"
-									keyboardType="email-address"
-									autoCorrect={false}
-									autoCapitalize="none"
-									onChangeText={email => this.setState({ email })}
-									value={this.state.email}
-								/>
-							</InputGroup>
-							<InputGroup style={styles.input}>
-								<Icon style={styles.inputIcon} name="ios-unlock" />
-								<Input
-									placeholder="Password"
-									onChangeText={password => this.setState({ password })}
-									value={this.state.password}
-									secureTextEntry
-								/>
-							</InputGroup>
-							{this.state.isLoading ? (
-								<Spinner size="small" color="#000000" />
-							) : (
-								<Button
-									style={styles.button}
-									onPress={() => this.onPressLogin()}
-								>
-									Login
-								</Button>
-							)}
-						</View>
-					</TouchableWithoutFeedback>
-				</View>
-			</Container>
-		);
-	}
+  render() {
+    const { user } = this.state;
+    return (
+      <View style={styles.container}>
+        { user
+          ? // Show user info if already logged in
+            <View style={styles.content}>
+              <Text style={styles.header}>
+                Welcome {user.name}!
+              </Text>
+              <View style={styles.avatar}>
+                <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
+              </View>
+            </View>
+          : // Show Please log in message if not
+            <View style={styles.content}>
+              <Text style={styles.header}>
+                Welcome Stranger!
+              </Text>
+              <View style={styles.avatar}>
+                <Icon name="user-circle" size={100} color="rgba(0,0,0,.09)" />
+              </View>
+              <Text style={styles.text}>
+                Please log in to continue {'\n'}
+                to the awesomness
+              </Text>
+            </View>
+        }
+        {/* Login buttons */}
+        <View style={styles.buttons}>
+          <Icon.Button
+            name="facebook"
+            backgroundColor="#3b5998"
+            onPress={this.loginWithFacebook.bind(this)}
+            {...iconStyles}
+          >
+            Login with Facebook
+          </Icon.Button>
+          <Icon.Button
+            name="google"
+            backgroundColor="#DD4B39"
+            onPress={this.loginWithGoogle.bind(this)}
+            {...iconStyles}
+          >
+            Or with Google
+          </Icon.Button>
+        </View>
+      </View>
+    );
+  }
 }
 
-export default Login;
+const iconStyles = {
+  borderRadius: 10,
+  iconStyle: { paddingVertical: 5 },
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: 20,
+  },
+  avatarImage: {
+    borderRadius: 50,
+    height: 100,
+    width: 100,
+  },
+  header: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  text: {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: 5,
+  },
+  buttons: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    margin: 20,
+    marginBottom: 30,
+  },
+});

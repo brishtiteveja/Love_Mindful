@@ -23,8 +23,8 @@ import Scanner from './scanner';
 import * as session from '../services/session';
 import * as routeHistoryActions from '../services/routeHistory/actions';
 import Splash from '../scenes/Splash';
-import Main from '../scenes/Main';
-//import Login from '../scenes/Main/scenes/Login';
+//import Main from '../scenes/Main';
+import Login from '../scenes/Main/scenes/Login';
 //import Register from '../scenes/Main/scenes/Register';
 //import Users from '../scenes/Main/scenes/Users';
 
@@ -147,8 +147,8 @@ export default class Index extends Component {
 }
 
 const routeStack = [
-	{ name: 'Main', component: Main },
-	//{ name: 'Login', component: Login },
+	//{ name: 'Main', component: Main },
+	{ name: 'Login', component: Login },
 	//{ name: 'Register', component: Register },
 	//{ name: 'Users', component: Users },
 ];
