@@ -12,9 +12,18 @@ import SafariView from 'react-native-safari-view';
 
 export default class App extends Component {
 
-  state = {
-    user: undefined, // user has not logged in yet
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+        user: undefined,    
+        props: props
+    }
+  }
+
+  onNavigatorEvent() {
+      console.log('Time to navigate');
+      console.log(this.state.props);
+  }
 
   // Set up Linking
   componentDidMount() {
@@ -46,10 +55,10 @@ export default class App extends Component {
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('http://localhost:3000/auth/facebook');
+  loginWithFacebook = () => this.openURL('http://oauthloginbackend.herokuapp.com/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://localhost:3000/auth/google');
+  loginWithGoogle = () => this.openURL('http://oauthloginbackend.herokuapp.com/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {
@@ -95,24 +104,38 @@ export default class App extends Component {
             </View>
         }
         {/* Login buttons */}
-        <View style={styles.buttons}>
-          <Icon.Button
-            name="facebook"
-            backgroundColor="#3b5998"
-            onPress={this.loginWithFacebook.bind(this)}
-            {...iconStyles}
-          >
-            Login with Facebook
-          </Icon.Button>
-          <Icon.Button
-            name="google"
-            backgroundColor="#DD4B39"
-            onPress={this.loginWithGoogle.bind(this)}
-            {...iconStyles}
-          >
-            Or with Google
-          </Icon.Button>
-        </View>
+        { !user
+           ? // Don't show login buttons if logged in
+            <View style={styles.buttons}>
+                <Icon.Button
+                    name="facebook"
+                    backgroundColor="#3b5998"
+                    onPress={this.loginWithFacebook.bind(this)}
+                    {...iconStyles}
+                >
+                    Login with Facebook
+                </Icon.Button>
+                <Icon.Button
+                    name="google"
+                    backgroundColor="#DD4B39"
+                    onPress={this.loginWithGoogle.bind(this)}
+                    {...iconStyles}
+                >
+                    Or with Google
+                </Icon.Button>
+            </View>
+          :
+            <View style={styles.buttons}>
+                <Icon.Button
+                    name="Main screen"
+                    backgroundColor="#3b5998"
+                    onPress={this.onNavigatorEvent.bind(this)}
+                    {...iconStyles}
+                >
+                   Move 
+                </Icon.Button>
+            </View>
+        }
       </View>
     );
   }
